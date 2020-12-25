@@ -1,0 +1,12 @@
+C:\Users\amade\source\repos\Gallery\Gallery.Data\bin\Debug\netcoreapp3.1\Gallery.Domains.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Data\obj\Debug\netcoreapp3.1\Gallery.Data.csprojAssemblyReference.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Data\obj\Debug\netcoreapp3.1\Gallery.Data.AssemblyInfoInputs.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Data\obj\Debug\netcoreapp3.1\Gallery.Data.AssemblyInfo.cs
+C:\Users\amade\source\repos\Gallery\Gallery.Data\bin\Debug\netcoreapp3.1\Gallery.Data.deps.json
+C:\Users\amade\source\repos\Gallery\Gallery.Data\bin\Debug\netcoreapp3.1\Gallery.Data.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Data\bin\Debug\netcoreapp3.1\Gallery.Data.pdb
+C:\Users\amade\source\repos\Gallery\Gallery.Data\bin\Debug\netcoreapp3.1\Gallery.Domains.pdb
+C:\Users\amade\source\repos\Gallery\Gallery.Data\obj\Debug\netcoreapp3.1\Gallery.Data.csproj.CopyComplete
+C:\Users\amade\source\repos\Gallery\Gallery.Data\obj\Debug\netcoreapp3.1\Gallery.Data.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Data\obj\Debug\netcoreapp3.1\Gallery.Data.pdb
+C:\Users\amade\source\repos\Gallery\Gallery.Data\obj\Debug\netcoreapp3.1\Gallery.Data.csproj.CoreCompileInputs.cache

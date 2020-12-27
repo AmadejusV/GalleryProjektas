@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "lkwZAlaBFUYtVOlcSPi3NkcPsxs6UfLDDaUVEkTTKHFbqitJNpxWYvdN1WeHrelDJ5S0h5FZJs3NFLsL2C+phg==",
+  "dgSpecHash": "HvNyrnNhMeZ6ueX+ZF9UI5QPVTE+SZqmTfqdfRJdaf4dL8ee3vp1bATkNCKV5tGr5N2m5KhAPJG3gyVnKXZo3A==",
   "success": true,
   "projectFilePath": "C:\\Users\\amade\\source\\repos\\Gallery\\Gallery.Domains\\Gallery.Domains.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\amade\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.10\\microsoft.aspnetcore.cryptography.internal.3.1.10.nupkg.sha512",
     "C:\\Users\\amade\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.10\\microsoft.aspnetcore.cryptography.keyderivation.3.1.10.nupkg.sha512",
+    "C:\\Users\\amade\\.nuget\\packages\\microsoft.aspnetcore.http.features\\3.1.10\\microsoft.aspnetcore.http.features.3.1.10.nupkg.sha512",
     "C:\\Users\\amade\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.1.10\\microsoft.aspnetcore.identity.entityframeworkcore.3.1.10.nupkg.sha512",
     "C:\\Users\\amade\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\amade\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
@@ -28,7 +29,8 @@
     "C:\\Users\\amade\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.10\\microsoft.extensions.primitives.3.1.10.nupkg.sha512",
     "C:\\Users\\amade\\.nuget\\packages\\system.collections.immutable\\1.7.1\\system.collections.immutable.1.7.1.nupkg.sha512",
     "C:\\Users\\amade\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512",
-    "C:\\Users\\amade\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
+    "C:\\Users\\amade\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512",
+    "C:\\Users\\amade\\.nuget\\packages\\system.io.pipelines\\4.7.3\\system.io.pipelines.4.7.3.nupkg.sha512"
   ],
   "logs": []
 }

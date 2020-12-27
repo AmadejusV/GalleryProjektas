@@ -89,20 +89,21 @@ namespace Gallery.Data.Migrations
 
             modelBuilder.Entity("Gallery.Domains.Image", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("ImageId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ImageId");
 
                     b.ToTable("Images");
                 });

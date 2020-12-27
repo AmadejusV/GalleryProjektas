@@ -11,7 +11,7 @@ namespace Gallery.Data
     {
         public DbSet<Image> Images { get; set; }
 
-        public Context(DbContextOptions<Context> options) : base(options)
+        public Context(DbContextOptions<Context> options) : base(options)       //calling base constructor
         {
 
         }

@@ -23,13 +23,15 @@ namespace Gallery.Web.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
-        // GET: Image
+        
+
         public async Task<IActionResult> Index()
         {
             return View(await _context.Images.ToListAsync());
         }
 
-        // GET: Image/Details/5
+        
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,29 +49,27 @@ namespace Gallery.Web.Controllers
             return View(image);
         }
 
-        // GET: Image/Create
+        
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Image/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ImageId,Title,ImageFile,Details")] Image image)
         {
             if (ModelState.IsValid)
             {
-                string wwwRootPath = _hostEnvironment.WebRootPath;         //sets path to wwwroot folder
+                string wwwRootPath = _hostEnvironment.WebRootPath;                      //sets path to wwwroot folder
                 string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
                 string extension = Path.GetExtension(image.ImageFile.FileName);
                 fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;   //creating unique name for the new image
-                image.ImageName = fileName;
+                image.ImageName = fileName;                                             //setting ImageName prop to be used for displaying image
                 string path = Path.Combine(wwwRootPath + "/Image/", fileName);
 
-                using(var fileStream = new FileStream(path, FileMode.Create))
+                using(var fileStream = new FileStream(path, FileMode.Create))           //creating/uploading the new image in the set path
                 {
                     await image.ImageFile.CopyToAsync(fileStream);
                 }
@@ -81,7 +81,7 @@ namespace Gallery.Web.Controllers
             return View(image);
         }
 
-        // GET: Image/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,9 +97,7 @@ namespace Gallery.Web.Controllers
             return View(image);
         }
 
-        // POST: Image/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ImageId,Title,ImageFile,Details,ImageName")] Image image)
@@ -109,55 +107,60 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            
-
             if (ModelState.IsValid)
             {
-                var oldImage = await _context.Images.FindAsync(id);      //bandom
-                var oldPath = Path.Combine(_hostEnvironment.WebRootPath, "Image", oldImage.ImageName);
-                if (System.IO.File.Exists(oldPath))
-                {
-                    System.IO.File.Delete(oldPath);
-                };
-                oldImage = null;
-
-
                 string wwwRootPath = _hostEnvironment.WebRootPath;
                 string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
                 string extension = Path.GetExtension(image.ImageFile.FileName);
                 fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                image.ImageName = fileName;
-                string newPath = Path.Combine(wwwRootPath + "/Image/", fileName);
+                var newImageName = fileName;                        //used to set the new ImageName after deletint the old one
+                var newPath = Path.Combine(wwwRootPath + "/Image/", fileName);
 
-                    //System.IO.File.Create(newPath);
+                if (newPath != null)
+                {
                     using (var fileStream = new FileStream(newPath, FileMode.Create))
                     {
                         await image.ImageFile.CopyToAsync(fileStream);
                     }
 
+                    var oldImage = await _context.Images.FindAsync(id);      
+                    var oldPath = Path.Combine(_hostEnvironment.WebRootPath, "Image", oldImage.ImageName);
+                    if (System.IO.File.Exists(oldPath))
+                    {
+                        System.IO.File.Delete(oldPath);
+                    };
+                    
 
-                try
-                {
-                    _context.Update(image);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ImageExists(image.ImageId))
+                    oldImage.ImageName = newImageName;
+                    oldImage.Details = image.Details;
+                    oldImage.Title = image.Title;
+                    try
                     {
-                        return NotFound();
+                        _context.Images.Update(oldImage);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!ImageExists(image.ImageId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
                 }
+
+
+
                 return RedirectToAction(nameof(Index));
             }
             return View(image);
         }
 
-        // GET: Image/Delete/5
+        
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -175,14 +178,15 @@ namespace Gallery.Web.Controllers
             return View(image);
         }
 
-        // POST: Image/Delete/5
+        
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var image = await _context.Images.FindAsync(id);
 
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", image.ImageName);   //making path to the current object image by using it's ImageName prop
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", image.ImageName);   
             if (System.IO.File.Exists(imagePath))
             {
                 System.IO.File.Delete(imagePath);

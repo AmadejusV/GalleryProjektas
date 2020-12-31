@@ -17,13 +17,13 @@ namespace Gallery.Domains
         [DisplayName("Enter a title for your image")]
         public string Title { get; set; }
         [Column(TypeName = "nvarchar(100)")]
-        //[Required(ErrorMessage = "An image name is required")] 
         [DisplayName("Image generated name")]
         public string ImageName { get; set; }
         [StringLength(255, ErrorMessage = "Details must not exceed 255 characters length")]
         public string Details { get; set; }
         [NotMapped]
         [DisplayName("Upload and image")]
+        [Required(ErrorMessage = "Must choose an image to be displayed")]
         public IFormFile ImageFile { get; set; }
 
     }

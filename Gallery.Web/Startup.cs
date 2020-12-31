@@ -31,6 +31,7 @@ namespace Gallery.Web
         {
             services.AddControllersWithViews(o => o.Filters.Add(new AuthorizeFilter()));      //authorize by default on all controllers
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddRazorPages().AddRazorRuntimeCompilation();
 
             services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<Context>();
             services.ConfigureApplicationCookie(options =>

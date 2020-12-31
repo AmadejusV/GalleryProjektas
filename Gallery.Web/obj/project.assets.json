@@ -2875,7 +2875,10 @@
         },
         "runtime": {
           "bin/placeholder/Gallery.Data.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Gallery.Domains/1.0.0": {
         "type": "project",

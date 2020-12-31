@@ -9,6 +9,7 @@ using Gallery.Data;
 using Gallery.Domains;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Gallery.Web.Models;
 
 namespace Gallery.Web.Controllers
 {
@@ -58,7 +59,7 @@ namespace Gallery.Web.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ImageId,Title,ImageFile,Details")] Image image)
+        public async Task<IActionResult> Create(ImageViewModel image)
         {
             if (ModelState.IsValid)
             {
@@ -69,12 +70,20 @@ namespace Gallery.Web.Controllers
                 image.ImageName = fileName;                                             //setting ImageName prop to be used for displaying image
                 string path = Path.Combine(wwwRootPath + "/Image/", fileName);
 
+                var newImageObject = new Image()
+                {
+                    ImageName = image.ImageName,
+                    Title = image.Title,
+                    Details = image.Details,
+                    ImageFile = image.ImageFile
+                };
+
                 using(var fileStream = new FileStream(path, FileMode.Create))           //creating/uploading the new image in the set path
                 {
                     await image.ImageFile.CopyToAsync(fileStream);
                 }
 
-                _context.Add(image);
+                _context.Add(newImageObject);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -90,17 +99,24 @@ namespace Gallery.Web.Controllers
             }
 
             var image = await _context.Images.FindAsync(id);
+            var imageViewModel = new ImageViewModel() {
+                ImageId=image.ImageId,
+                Title=image.Title,
+                Details=image.Details,
+                ImageName=image.ImageName,
+                ImageFile=image.ImageFile
+            };
             if (image == null)
             {
                 return NotFound();
             }
-            return View(image);
+            return View(imageViewModel);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ImageId,Title,ImageFile,Details,ImageName")] Image image)
+        public async Task<IActionResult> Edit(int id, ImageViewModel image)
         {
             if (id != image.ImageId)
             {
@@ -123,20 +139,21 @@ namespace Gallery.Web.Controllers
                         await image.ImageFile.CopyToAsync(fileStream);
                     }
 
-                    var oldImage = await _context.Images.FindAsync(id);      
-                    var oldPath = Path.Combine(_hostEnvironment.WebRootPath, "Image", oldImage.ImageName);
+                    var oldImageObject = await _context.Images.FindAsync(id);      
+                    var oldPath = Path.Combine(_hostEnvironment.WebRootPath, "Image", oldImageObject.ImageName);
                     if (System.IO.File.Exists(oldPath))
                     {
                         System.IO.File.Delete(oldPath);
                     };
                     
 
-                    oldImage.ImageName = newImageName;
-                    oldImage.Details = image.Details;
-                    oldImage.Title = image.Title;
+                    oldImageObject.ImageName = newImageName;
+                    oldImageObject.Details = image.Details;
+                    oldImageObject.Title = image.Title;
+
                     try
                     {
-                        _context.Images.Update(oldImage);
+                        _context.Images.Update(oldImageObject);
                         await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)
@@ -151,8 +168,6 @@ namespace Gallery.Web.Controllers
                         }
                     }
                 }
-
-
 
                 return RedirectToAction(nameof(Index));
             }

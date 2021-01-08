@@ -10,5 +10,9 @@ namespace Gallery.Domains
         public DateTime TimeCreated { get; set; }
         public int PostId { get; set; }
         public Post Post { get; set; }
+        public Comment()
+        {
+            TimeCreated = DateTime.Now;
+        }
     }
 }

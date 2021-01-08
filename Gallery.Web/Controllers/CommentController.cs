@@ -61,7 +61,7 @@ namespace Gallery.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( CommentViewModel commentModel)
+        public async Task<IActionResult> Create(CommentViewModel commentModel)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace Gallery.Web.Controllers
                     Id = Guid.NewGuid(),
                     Text = commentModel.Text,
                     AppUser = applicationUser,
-                    TimeCreated = DateTime.Now,
+                    //TimeCreated = DateTime.Now,
                     PostId = commentModel.PostId
                 };
 
@@ -113,7 +113,7 @@ namespace Gallery.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Text,TimeCreated")] Comment comment)
+        public async Task<IActionResult> Edit(Guid id, /*[Bind("Id,Text,TimeCreated")]*/ Comment comment)
         {
             if (id != comment.Id)
             {
@@ -124,6 +124,7 @@ namespace Gallery.Web.Controllers
             {
                 try
                 {
+                    //comment.TimeCreated = DateTime.Now;
                     _context.Update(comment);
                     await _context.SaveChangesAsync();
                 }

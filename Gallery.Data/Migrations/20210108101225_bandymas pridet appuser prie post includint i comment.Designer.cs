@@ -4,14 +4,16 @@ using Gallery.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Gallery.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20210108101225_bandymas pridet appuser prie post includint i comment")]
+    partial class bandymaspridetappuserpriepostincludinticomment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,6 +66,9 @@ namespace Gallery.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -83,6 +88,8 @@ namespace Gallery.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -264,6 +271,13 @@ namespace Gallery.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Gallery.Domains.AppUser", b =>
+                {
+                    b.HasOne("Gallery.Domains.Post", null)
+                        .WithMany("AppUsers")
+                        .HasForeignKey("PostId");
                 });
 
             modelBuilder.Entity("Gallery.Domains.Comment", b =>

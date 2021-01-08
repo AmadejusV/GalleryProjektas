@@ -8,5 +8,6 @@ namespace Gallery.Domains
     public class AppUser : IdentityUser
     {
         public string Name { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace Gallery.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.AuthError = "Sumtin Wong! Are you registered? If so check if entered data is correct.";
+                ViewBag.AuthError = "Sumtin Wong! Are you a registered user? If so check if entered data is correct.";
                 return View("Login", model);
             }
 
@@ -67,12 +67,14 @@ namespace Gallery.Web.Controllers
                 AppUser newUser = new AppUser()
                 {
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    Comments = new List<Comment>()
                 };
 
                 var result = await _userManager.CreateAsync(newUser, model.ConfirmPassword);
                 if (result.Succeeded)
                 {
+                    
                     return RedirectToAction("Login");
                 }
             }

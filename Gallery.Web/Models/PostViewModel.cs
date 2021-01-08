@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Gallery.Web.Models
 {
-    public class ImageViewModel
+    public class PostViewModel
     {
-        public int ImageId { get; set; }
+        public int PostId { get; set; }
         [Required(ErrorMessage = "A title is required")]
         [Column(TypeName = "nvarchar(50)")]
         [DisplayName("Enter a title for your image")]
@@ -22,7 +22,7 @@ namespace Gallery.Web.Models
         [StringLength(255, ErrorMessage = "Details must not exceed 255 characters length")]
         public string Details { get; set; }
         [NotMapped]
-        [DisplayName("Upload and image")]
+        [DisplayName("Upload an image")]
         [Required(ErrorMessage = "Must choose an image to be displayed")]
         public IFormFile ImageFile { get; set; }
     }

@@ -9,8 +9,8 @@ namespace Gallery.Data
 {
     public class Context : IdentityDbContext<AppUser>
     {
-        public DbSet<Image> Images { get; set; }
-
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public Context(DbContextOptions<Context> options) : base(options)       //calling base constructor
         {
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Gallery.Domains.Image>
+﻿@model IEnumerable<Gallery.Domains.Post>
 
 @{
     ViewData["Title"] = "Index";
@@ -40,9 +40,9 @@
                 <img src="@("~/Image/"+item.ImageName)" alt="@item.ImageName" asp-append-version="true" width="250" height="250" />
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ImageId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ImageId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ImageId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.PostId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PostId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PostId">Delete</a>
             </td>
         </tr>
 }

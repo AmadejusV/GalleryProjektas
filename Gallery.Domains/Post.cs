@@ -8,14 +8,20 @@ using System.Text;
 
 namespace Gallery.Domains
 {
-    public class Image
+    public class Post
     {
         [Key]
-        public int ImageId { get; set; }
+        public int PostId { get; set; }
         public string Title { get; set; }
         public string ImageName { get; set; }
         public string Details { get; set; }
         [NotMapped]
         public IFormFile ImageFile { get; set; }
+        public List<Comment> Comments { get; set; }
+
+        public Post()
+        {
+            Comments = new List<Comment>();
+        }
     }
 }

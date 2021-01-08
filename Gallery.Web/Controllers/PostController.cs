@@ -13,24 +13,22 @@ using Gallery.Web.Models;
 
 namespace Gallery.Web.Controllers
 {
-    public class ImageController : Controller
+    public class PostController : Controller
     {
         private readonly Context _context;
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ImageController(Context context, IWebHostEnvironment hostEnvironment)
+        public PostController(Context context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             _hostEnvironment = hostEnvironment;
         }
 
-        
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Images.ToListAsync());
+            return View(await _context.Posts.ToListAsync());
         }
-
         
 
         public async Task<IActionResult> Details(int? id)
@@ -40,14 +38,16 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            var image = await _context.Images
-                .FirstOrDefaultAsync(m => m.ImageId == id);
-            if (image == null)
+            var post = await _context.Posts.Include(c=>c.Comments).ThenInclude(c => c.AppUser)
+                .FirstOrDefaultAsync(m => m.PostId == id);
+            //ThenInclude helps include an object property that belongs to Comments list object
+
+            if (post == null)
             {
                 return NotFound();
             }
 
-            return View(image);
+            return View(post);
         }
 
         
@@ -59,35 +59,35 @@ namespace Gallery.Web.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ImageViewModel image)
+        public async Task<IActionResult> Create(PostViewModel post)
         {
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _hostEnvironment.WebRootPath;                      //sets path to wwwroot folder
-                string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
-                string extension = Path.GetExtension(image.ImageFile.FileName);
+                string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
+                string extension = Path.GetExtension(post.ImageFile.FileName);
                 fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;   //creating unique name for the new image
-                image.ImageName = fileName;                                             //setting ImageName prop to be used for displaying image
+                post.ImageName = fileName;                                             //setting ImageName prop to be used for displaying image
                 string path = Path.Combine(wwwRootPath + "/Image/", fileName);
 
-                var newImageObject = new Image()
+                var newPostObject = new Post()
                 {
-                    ImageName = image.ImageName,
-                    Title = image.Title,
-                    Details = image.Details,
-                    ImageFile = image.ImageFile
+                    ImageName = post.ImageName,
+                    Title = post.Title,
+                    Details = post.Details,
+                    ImageFile = post.ImageFile
                 };
 
                 using(var fileStream = new FileStream(path, FileMode.Create))           //creating/uploading the new image in the set path
                 {
-                    await image.ImageFile.CopyToAsync(fileStream);
+                    await post.ImageFile.CopyToAsync(fileStream);
                 }
 
-                _context.Add(newImageObject);
+                _context.Add(newPostObject);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(image);
+            return View(post);
         }
 
         
@@ -98,27 +98,28 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            var image = await _context.Images.FindAsync(id);
-            var imageViewModel = new ImageViewModel() {
-                ImageId=image.ImageId,
-                Title=image.Title,
-                Details=image.Details,
-                ImageName=image.ImageName,
-                ImageFile=image.ImageFile
-            };
-            if (image == null)
+            var post = await _context.Posts.FindAsync(id);
+            if (post == null)
             {
                 return NotFound();
             }
-            return View(imageViewModel);
+            var postViewModel = new PostViewModel() {
+                PostId=post.PostId,
+                Title=post.Title,
+                Details=post.Details,
+                ImageName=post.ImageName,
+                ImageFile=post.ImageFile
+            };
+
+            return View(postViewModel);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ImageViewModel image)
+        public async Task<IActionResult> Edit(int id, PostViewModel post)
         {
-            if (id != image.ImageId)
+            if (id != post.PostId)
             {
                 return NotFound();
             }
@@ -126,39 +127,39 @@ namespace Gallery.Web.Controllers
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _hostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
-                string extension = Path.GetExtension(image.ImageFile.FileName);
+                string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
+                string extension = Path.GetExtension(post.ImageFile.FileName);
                 fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                var newImageName = fileName;                        //used to set the new ImageName after deletint the old one
+                var newPostName = fileName;                        //used to set the new ImageName after deleting the old one
                 var newPath = Path.Combine(wwwRootPath + "/Image/", fileName);
 
                 if (newPath != null)
                 {
                     using (var fileStream = new FileStream(newPath, FileMode.Create))
                     {
-                        await image.ImageFile.CopyToAsync(fileStream);
+                        await post.ImageFile.CopyToAsync(fileStream);
                     }
 
-                    var oldImageObject = await _context.Images.FindAsync(id);      
-                    var oldPath = Path.Combine(_hostEnvironment.WebRootPath, "Image", oldImageObject.ImageName);
+                    var oldPostObject = await _context.Posts.FindAsync(id);      
+                    var oldPath = Path.Combine(_hostEnvironment.WebRootPath, "Image", oldPostObject.ImageName);
                     if (System.IO.File.Exists(oldPath))
                     {
                         System.IO.File.Delete(oldPath);
                     };
                     
 
-                    oldImageObject.ImageName = newImageName;
-                    oldImageObject.Details = image.Details;
-                    oldImageObject.Title = image.Title;
+                    oldPostObject.ImageName = newPostName;
+                    oldPostObject.Details = post.Details;
+                    oldPostObject.Title = post.Title;
 
                     try
                     {
-                        _context.Images.Update(oldImageObject);
+                        _context.Posts.Update(oldPostObject);
                         await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)
                     {
-                        if (!ImageExists(image.ImageId))
+                        if (!ImageExists(post.PostId))
                         {
                             return NotFound();
                         }
@@ -171,7 +172,7 @@ namespace Gallery.Web.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            return View(image);
+            return View(post);
         }
 
         
@@ -183,8 +184,8 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            var image = await _context.Images
-                .FirstOrDefaultAsync(m => m.ImageId == id);
+            var image = await _context.Posts
+                .FirstOrDefaultAsync(m => m.PostId == id);
             if (image == null)
             {
                 return NotFound();
@@ -199,22 +200,22 @@ namespace Gallery.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var image = await _context.Images.FindAsync(id);
+            var post = await _context.Posts.FindAsync(id);
 
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", image.ImageName);   
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", post.ImageName);   
             if (System.IO.File.Exists(imagePath))
             {
                 System.IO.File.Delete(imagePath);
             };
 
-            _context.Images.Remove(image);
+            _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ImageExists(int id)
         {
-            return _context.Images.Any(e => e.ImageId == id);
+            return _context.Posts.Any(e => e.PostId == id);
         }
     }
 }

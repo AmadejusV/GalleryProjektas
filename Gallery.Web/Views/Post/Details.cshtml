@@ -1,0 +1,58 @@
+﻿@model Gallery.Domains.Post
+@*pakeistas is Domains.Post / .Web.Models.CommentViewModel*@
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Model.Title</h1>
+
+<div>
+    @*<h4>@Model.Title</h4>*@
+    <hr />
+    <dl class="row">
+        <dd class="col-sm-12">
+            <img  src="@("~/Image/"+Model.ImageName)" alt="@Model.ImageName" asp-append-version="true" />
+        </dd>
+        @*<dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ImageName)
+        </dd>*@
+        <dt class="col-sm-12">
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+    </dl>
+    <h4>Comments</h4>
+    <hr />
+</div>
+<div>
+    @*@foreach (var item in Model.Comments.Where(p => p.PostId == Model.PostId))
+    {
+        <p>Useris - @item.AppUser.UserName</p>
+        <p>Komentaras - @item.Text</p>
+    }*@
+    @foreach (var item in Model.Comments)
+    {
+        <h5>@item.AppUser.UserName</h5>
+        <p>@item.Text</p>
+    }
+</div>
+<div>
+    <form asp-controller="Comment" asp-action="Create" method="post">
+        <a asp-controller="Comment" asp-action="Create" asp-route-id="@Model.PostId">Click to write a comment</a>
+    </form>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PostId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

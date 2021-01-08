@@ -48,17 +48,18 @@ namespace Gallery.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Images",
+                name: "Posts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Url = table.Column<string>(nullable: true),
+                    PostId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: true),
+                    ImageName = table.Column<string>(nullable: true),
                     Details = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.PrimaryKey("PK_Posts", x => x.PostId);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,6 +168,33 @@ namespace Gallery.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    AppUserId = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    TimeCreated = table.Column<DateTime>(nullable: false),
+                    PostId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -205,6 +233,16 @@ namespace Gallery.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AppUserId",
+                table: "Comments",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_PostId",
+                table: "Comments",
+                column: "PostId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -225,13 +263,16 @@ namespace Gallery.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Images");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
         }
     }
 }

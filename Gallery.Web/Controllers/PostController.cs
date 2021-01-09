@@ -10,6 +10,8 @@ using Gallery.Domains;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Gallery.Web.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace Gallery.Web.Controllers
 {
@@ -17,11 +19,13 @@ namespace Gallery.Web.Controllers
     {
         private readonly Context _context;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly UserManager<AppUser> _userManager;
 
-        public PostController(Context context, IWebHostEnvironment hostEnvironment)
+        public PostController(Context context, IWebHostEnvironment hostEnvironment, UserManager<AppUser> userManager)
         {
             _context = context;
             _hostEnvironment = hostEnvironment;
+            _userManager = userManager;
         }
 
 
@@ -29,7 +33,7 @@ namespace Gallery.Web.Controllers
         {
             return View(await _context.Posts.ToListAsync());
         }
-        
+
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -38,7 +42,7 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.Include(c=>c.Comments).ThenInclude(c => c.AppUser)
+            var post = await _context.Posts.Include(c => c.Comments).ThenInclude(c => c.AppUser)
                 .FirstOrDefaultAsync(m => m.PostId == id);
             //ThenInclude helps include an object property that belongs to Comments list object
 
@@ -47,16 +51,29 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            AppUser currentAppUser = await _userManager.FindByIdAsync(userId);
+
+            var detailsViewModel = new DetailsViewModel()
+            {
+                Comments = post.Comments,
+                PostId = post.PostId,
+                ImageName = post.ImageName,
+                Details = post.Details,
+                Title = post.Title,
+                CurrentAppUser = currentAppUser
+            };
+            // perduot detailsViewModel ir palygint commentaru appuserius su current appuseriu, gal reikes hidden fieldu laikyt informacijai
             return View(post);
         }
 
-        
+
         public IActionResult Create()
         {
             return View();
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PostViewModel post)
@@ -78,7 +95,7 @@ namespace Gallery.Web.Controllers
                     ImageFile = post.ImageFile
                 };
 
-                using(var fileStream = new FileStream(path, FileMode.Create))           //creating/uploading the new image in the set path
+                using (var fileStream = new FileStream(path, FileMode.Create))           //creating/uploading the new image in the set path
                 {
                     await post.ImageFile.CopyToAsync(fileStream);
                 }
@@ -90,7 +107,7 @@ namespace Gallery.Web.Controllers
             return View(post);
         }
 
-        
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -103,12 +120,13 @@ namespace Gallery.Web.Controllers
             {
                 return NotFound();
             }
-            var postViewModel = new PostViewModel() {
-                PostId=post.PostId,
-                Title=post.Title,
-                Details=post.Details,
-                ImageName=post.ImageName,
-                ImageFile=post.ImageFile
+            var postViewModel = new PostViewModel()
+            {
+                PostId = post.PostId,
+                Title = post.Title,
+                Details = post.Details,
+                ImageName = post.ImageName,
+                ImageFile = post.ImageFile
             };
 
             return View(postViewModel);
@@ -140,13 +158,13 @@ namespace Gallery.Web.Controllers
                         await post.ImageFile.CopyToAsync(fileStream);
                     }
 
-                    var oldPostObject = await _context.Posts.FindAsync(id);      
+                    var oldPostObject = await _context.Posts.FindAsync(id);
                     var oldPath = Path.Combine(_hostEnvironment.WebRootPath, "Image", oldPostObject.ImageName);
                     if (System.IO.File.Exists(oldPath))
                     {
                         System.IO.File.Delete(oldPath);
                     };
-                    
+
 
                     oldPostObject.ImageName = newPostName;
                     oldPostObject.Details = post.Details;
@@ -175,7 +193,7 @@ namespace Gallery.Web.Controllers
             return View(post);
         }
 
-        
+
 
         public async Task<IActionResult> Delete(int? id)
         {
@@ -194,7 +212,7 @@ namespace Gallery.Web.Controllers
             return View(image);
         }
 
-        
+
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -202,7 +220,7 @@ namespace Gallery.Web.Controllers
         {
             var post = await _context.Posts.FindAsync(id);
 
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", post.ImageName);   
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", post.ImageName);
             if (System.IO.File.Exists(imagePath))
             {
                 System.IO.File.Delete(imagePath);

@@ -124,7 +124,6 @@ namespace Gallery.Web.Controllers
             {
                 try
                 {
-                    //comment.TimeCreated = DateTime.Now;
                     _context.Update(comment);
                     await _context.SaveChangesAsync();
                 }

@@ -1,4 +1,6 @@
-﻿@model Gallery.Domains.Post
+﻿@model Gallery.Web.Models.DetailsViewModel
+@* Gallery.Domains.Post *@
+
 @{
     ViewData["Title"] = "Details and comments";
 }
@@ -9,20 +11,20 @@
     <hr />
     <dl class="row">
         <dd class="col-sm-12">
-            <img  src="@("~/Image/"+Model.ImageName)" alt="@Model.ImageName" asp-append-version="true" />
+            <img src="@("~/Image/"+Model.ImageName)" alt="@Model.ImageName" asp-append-version="true" />
         </dd>
         @*<dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ImageName)
-        </dd>*@
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ImageName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ImageName)
+            </dd>*@
         <dt class="col-sm-12">
             @Html.DisplayNameFor(model => model.Details)
         </dt>
@@ -35,17 +37,21 @@
 </div>
 <div>
     @*@foreach (var item in Model.Comments.Where(p => p.PostId == Model.PostId))
-    {
-        <p>Useris - @item.AppUser.UserName</p>
-        <p>Komentaras - @item.Text</p>
-    }*@
+        {
+            <p>Useris - @item.AppUser.UserName</p>
+            <p>Komentaras - @item.Text</p>
+        }*@
     @foreach (var item in Model.Comments)
     {
     <div class="row">
         <h5 class="col-2">@item.AppUser.UserName</h5> <span>@item.TimeCreated</span>
         <p class="col-12">@item.Text</p>
-        <a class="col-1" asp-controller="Comment" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-        <a class="col-1" asp-controller="Comment" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        @if (item.AppUser==Model.CurrentAppUser)
+        {
+            <a class="col-1" asp-controller="Comment" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            <a class="col-1" asp-controller="Comment" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        }
+
     </div>
     }
 </div>

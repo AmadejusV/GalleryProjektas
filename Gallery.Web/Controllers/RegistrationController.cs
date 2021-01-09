@@ -15,9 +15,9 @@ namespace Gallery.Web.Controllers
         //private readonly IConfiguration _configuration;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;  //patikrins programa
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 
-        public RegistrationController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public RegistrationController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole<Guid>> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,7 +40,7 @@ namespace Gallery.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.AuthError = "Sumtin Wong! Are you a registered user? If so check if entered data is correct.";
+                ViewBag.AuthError = "The email adress must be valid, the password must contain atleast 1 capital letter, number, symbol and cannot be shorter than 6 symbols long.";
                 return View("Login", model);
             }
 
@@ -50,6 +50,7 @@ namespace Gallery.Web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            ViewBag.AuthError = "Sumtin Wong! Are you a registered user? If so check if entered data is correct.";
             return View();
         }
 

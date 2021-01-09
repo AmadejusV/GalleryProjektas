@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,7 +34,7 @@ namespace Gallery.Web
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
-            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<Context>();
+            services.AddIdentity<AppUser, IdentityRole<Guid>>().AddEntityFrameworkStores<Context>().AddDefaultTokenProviders().AddUserStore<UserStore<AppUser, IdentityRole<Guid>, Context, Guid>>().AddRoleStore<RoleStore<IdentityRole<Guid>, Context, Guid>>();
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Registration/Login";
@@ -72,7 +73,7 @@ namespace Gallery.Web
         private void CreateRoles(IServiceProvider serviceProvider)
         {
 
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
             //var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
 
             string[] roleNames = { "Admin", "Manager", "Member" };
@@ -82,7 +83,7 @@ namespace Gallery.Web
                 result.Wait();
                 if (!result.Result)
                 {
-                    roleManager.CreateAsync(new IdentityRole(item)).Wait();
+                    roleManager.CreateAsync(new IdentityRole<Guid>(item)).Wait();
                 }
             }
 

@@ -64,7 +64,8 @@ namespace Gallery.Web.Controllers
                 CurrentAppUser = currentAppUser
             };
             // perduot detailsViewModel ir palygint commentaru appuserius su current appuseriu, gal reikes hidden fieldu laikyt informacijai
-            return View(post);
+            return View(detailsViewModel);
+            //post
         }
 
 
@@ -115,7 +116,9 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
+            var post = await _context.Posts./*Include(p => p.ImageFile).*/FirstOrDefaultAsync(p => p.PostId == id);
+            //Can't include ImageFile therefore during edit need to reselect the image
+
             if (post == null)
             {
                 return NotFound();

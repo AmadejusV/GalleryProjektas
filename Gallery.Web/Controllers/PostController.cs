@@ -37,6 +37,12 @@ namespace Gallery.Web.Controllers
         }
 
         [AllowAnonymous]
+        public async Task<IActionResult> GuestGallery()
+        {
+            return View(await _context.Posts.ToListAsync());
+        }
+
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

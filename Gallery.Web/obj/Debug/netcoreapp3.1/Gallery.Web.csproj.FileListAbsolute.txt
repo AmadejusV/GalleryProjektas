@@ -457,3 +457,4 @@ C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Vi
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Comment\Edit.cshtml.g.cs
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Comment\Index.cshtml.g.cs
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Contact.cshtml.g.cs
+C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Post\GuestGallery.cshtml.g.cs

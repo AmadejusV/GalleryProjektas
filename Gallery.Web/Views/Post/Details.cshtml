@@ -28,7 +28,8 @@
     <div class="row">
         <h5 class="col-2">@item.AppUser.UserName</h5> <span>@item.TimeCreated</span>
         <p class="col-12">@item.Text</p>
-        @if (item.AppUser==Model.CurrentAppUser)
+        @* Access to delete comments for admin and comment creator *@
+        @if (item.AppUser==Model.CurrentAppUser || Model.CurrentAppUser.UserName=="igne@admin.com")
         {
             <a class="col-1" asp-controller="Comment" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
             <a class="col-1" asp-controller="Comment" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -38,10 +39,15 @@
 </div>
 <div>
     <form asp-controller="Comment" asp-action="Create" method="post">
-        <a asp-controller="Comment" asp-action="Create" asp-route-id="@Model.PostId">Click to write a comment</a>
+        <a asp-controller="Comment" asp-action="Create" asp-route-id="@Model.PostId" class="btn btn-primary">Click to write a comment</a>
     </form>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.PostId">Edit</a>
-    <a asp-action="Index">Back to List</a>
+    @* Admin access to post edit and admin gallery buttons *@
+    @if (Model.CurrentAppUser.UserName == "igne@admin.com")
+    {
+        <a asp-action="Edit" asp-route-id="@Model.PostId" class="btn btn-success">Edit post</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to admin gallery</a>
+    }
+    <a asp-action="GuestGallery" class="btn btn-secondary">Back to gallery</a>
 </div>

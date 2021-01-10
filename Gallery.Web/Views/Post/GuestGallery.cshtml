@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<Gallery.Domains.Post>
 
 @{
-    ViewData["Title"] = "Admin gallery";
+    ViewData["Title"] = "Guest Gallery";
 }
 
-<h1>Admin Galerija</h1>
+<h1>Ignes Gallery</h1>
 
-<p>
-    <a asp-action="Create">Add a new Image</a>
-</p>
 <div class="row">
     @foreach (var item in Model)
     {
@@ -26,11 +23,8 @@
                 @Html.DisplayFor(modelItem => item.Details)
             </p>
             <span>
-                <a asp-action="Edit" asp-route-id="@item.PostId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PostId">Details and comments</a> |
-                <a asp-action="Delete" asp-route-id="@item.PostId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.PostId">Details and comments</a>
             </span>
         </div>
     }
 </div>
-

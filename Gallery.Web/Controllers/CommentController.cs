@@ -80,12 +80,11 @@ namespace Gallery.Web.Controllers
                     return NotFound();
                 }
 
-                var newComment = new Comment()        //keist?
+                var newComment = new Comment()
                 {
                     Id = Guid.NewGuid(),
                     Text = commentModel.Text,
                     AppUser = applicationUser,
-                    //TimeCreated = DateTime.Now,
                     PostId = commentModel.PostId
                 };
 
@@ -175,7 +174,6 @@ namespace Gallery.Web.Controllers
             var comment = await _context.Comments.FindAsync(id);
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
-            //return RedirectToAction(nameof(Index));
             return Redirect("~/Post/Details/" + comment.PostId);
         }
 

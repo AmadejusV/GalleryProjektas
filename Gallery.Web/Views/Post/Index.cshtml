@@ -1,50 +1,36 @@
 ﻿@model IEnumerable<Gallery.Domains.Post>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Admin gallery";
 }
 
-<h1>Galerija</h1>
+<h1>Admin Galerija</h1>
 
 <p>
     <a asp-action="Create">Add a new Image</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Details)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-3">
+            <img src="@("~/Image/"+item.ImageName)" alt="@item.ImageName" asp-append-version="true" width="250" height="250" />
+        </div>
+        <div class="col-3">
+            <h3>
                 @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
+            </h3>
+            <p>
                 @Html.DisplayFor(modelItem => item.ImageName)
-            </td>
-            <td>
+            </p>
+            <p>
                 @Html.DisplayFor(modelItem => item.Details)
-            </td>
-            <td>
-                <img src="@("~/Image/"+item.ImageName)" alt="@item.ImageName" asp-append-version="true" width="250" height="250" />
-            </td>
-            <td>
+            </p>
+            <span>
                 <a asp-action="Edit" asp-route-id="@item.PostId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.PostId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.PostId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            </span>
+        </div>
+    }
+</div>
+

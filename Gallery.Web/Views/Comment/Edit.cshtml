@@ -14,15 +14,9 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="@Model.PostId" />
             <div class="form-group">
-                @*<label asp-for="Text" class="control-label"></label>*@
                 <textarea asp-for="Text" class="form-control" rows="4" cols="80"></textarea>
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-            <label asp-for="TimeCreated" class="control-label"></label>
-            <input asp-for="TimeCreated" class="form-control" />
-            <span asp-validation-for="TimeCreated" class="text-danger"></span>
-        </div>*@
         <div class="form-group">
             <input type="submit" value="Edit comment" class="btn btn-success" />
             <a asp-controller="Post" asp-action="Details" asp-route-id="@Model.PostId" class="btn btn-danger">Cancel</a>

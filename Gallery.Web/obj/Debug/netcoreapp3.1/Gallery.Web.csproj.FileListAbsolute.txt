@@ -18,7 +18,6 @@ C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Gallery.
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Gallery.Web.TagHelpers.output.cache
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Gallery.Web.RazorCoreGenerate.cache
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -457,3 +456,4 @@ C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Vi
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Comment\Details.cshtml.g.cs
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Comment\Edit.cshtml.g.cs
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Comment\Index.cshtml.g.cs
+C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Contact.cshtml.g.cs

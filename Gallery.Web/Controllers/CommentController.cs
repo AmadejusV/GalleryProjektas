@@ -55,7 +55,12 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            return View(id);
+            var commentViewModel = new CommentViewModel()
+            {
+                PostId=(int)id
+            };
+
+            return View(commentViewModel);
         }
 
 
@@ -89,12 +94,13 @@ namespace Gallery.Web.Controllers
 
                 _context.Update(post);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return Redirect("~/Post/Details/" + commentModel.PostId); //Redirecting to a specific path
             }
             return View(commentModel);
         }
 
-        // GET: Post/Edit/5
+        // GET: Comment/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -138,7 +144,7 @@ namespace Gallery.Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Redirect("~/Post/Details/" + comment.PostId);
             }
             return View(comment);
         }
@@ -169,7 +175,8 @@ namespace Gallery.Web.Controllers
             var comment = await _context.Comments.FindAsync(id);
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+            return Redirect("~/Post/Details/" + comment.PostId);
         }
 
         private bool CommentExists(Guid id)

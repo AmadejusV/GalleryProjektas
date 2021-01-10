@@ -1,34 +1,29 @@
-﻿@model int
-@* perduodu int modeli *@
+﻿@model Gallery.Web.Models.CommentViewModel
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Compose your comment";
 }
 
 <h1>Compose your comment</h1>
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label name="Text" class="control-label"></label>
-                <input name="Text" class="form-control" />
-                <span @*asp-validation-for="Text"*@ class="text-danger"></span>
-                <input name="postId" type="hidden" asp-for="@Model" />
-                @* name taiko i properties kaip Model. *@
+                <textarea asp-for="Text" class="form-control" rows="4" cols="80" placeholder="Enter your comment here..."></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+                <input asp-for="@Model.PostId" type="hidden"/>
             </div>
             <div class="form-group">
                 <input type="submit" value="Comment" class="btn btn-primary" />
+                <a asp-controller="Post" asp-action="Details" asp-route-id="@Model.PostId" class="btn btn-danger">Cancel</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-    <a asp-controller="Post" asp-action="Details" asp-route-id="PostId">Back to Image</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

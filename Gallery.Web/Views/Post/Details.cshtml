@@ -36,11 +36,6 @@
     <hr />
 </div>
 <div>
-    @*@foreach (var item in Model.Comments.Where(p => p.PostId == Model.PostId))
-        {
-            <p>Useris - @item.AppUser.UserName</p>
-            <p>Komentaras - @item.Text</p>
-        }*@
     @foreach (var item in Model.Comments)
     {
     <div class="row">

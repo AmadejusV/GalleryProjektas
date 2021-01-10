@@ -12,9 +12,11 @@ using System.IO;
 using Gallery.Web.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gallery.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PostController : Controller
     {
         private readonly Context _context;
@@ -34,7 +36,7 @@ namespace Gallery.Web.Controllers
             return View(await _context.Posts.ToListAsync());
         }
 
-
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -65,7 +67,6 @@ namespace Gallery.Web.Controllers
             };
             // perduot detailsViewModel ir palygint commentaru appuserius su current appuseriu, gal reikes hidden fieldu laikyt informacijai
             return View(detailsViewModel);
-            //post
         }
 
 

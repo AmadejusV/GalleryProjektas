@@ -10,6 +10,7 @@ using Gallery.Domains;
 using Gallery.Web.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace Gallery.Web.Controllers
 {
@@ -17,23 +18,31 @@ namespace Gallery.Web.Controllers
     {
         private readonly Context _context;
         private readonly UserManager<AppUser> _userManager;
-        public CommentController(Context context, UserManager<AppUser> userManager)
+        private readonly ILogger<CommentController> _logger;
+
+        public CommentController(Context context, UserManager<AppUser> userManager, ILogger<CommentController> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
 
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("Comment Index action visited at {time}", DateTime.Now);
+
             return View(await _context.Comments.ToListAsync());
         }
 
 
         public async Task<IActionResult> Details(Guid? id)
         {
+            _logger.LogInformation("Comment Details action visited at {time}", DateTime.Now);
+
             if (id == null)
             {
+                _logger.LogError("id has null value");
                 return NotFound();
             }
 
@@ -41,6 +50,7 @@ namespace Gallery.Web.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (comment == null)
             {
+                _logger.LogError("comment object was not found or has null value");
                 return NotFound();
             }
 
@@ -50,8 +60,11 @@ namespace Gallery.Web.Controllers
 
         public  IActionResult Create(int? id)
         {
+            _logger.LogInformation("Comment Create action visited at {time}", DateTime.Now);
+
             if (id == null)
             {
+                _logger.LogError("id has null value");
                 return NotFound();
             }
 
@@ -77,6 +90,7 @@ namespace Gallery.Web.Controllers
 
                 if (post == null)
                 {
+                    _logger.LogError("id has null value");
                     return NotFound();
                 }
 
@@ -93,23 +107,29 @@ namespace Gallery.Web.Controllers
 
                 _context.Update(post);
                 await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
+
+                _logger.LogInformation("New comment created at {time}, id - {commentId}", DateTime.Now, newComment.Id);
                 return Redirect("~/Post/Details/" + commentModel.PostId); //Redirecting to a specific path
             }
+            _logger.LogError("Model state is not valid");
             return View(commentModel);
         }
 
         // GET: Comment/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
+            _logger.LogInformation("Comment Edit action visited at {time}", DateTime.Now);
+
             if (id == null)
             {
+                _logger.LogError("id has null value");
                 return NotFound();
             }
 
             var comment = await _context.Comments.FindAsync(id);
             if (comment == null)
             {
+                _logger.LogError("comment object was not found or has null value");
                 return NotFound();
             }
             return View(comment);
@@ -118,10 +138,11 @@ namespace Gallery.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, /*[Bind("Id,Text,TimeCreated")]*/ Comment comment)
+        public async Task<IActionResult> Edit(Guid id, Comment comment)
         {
             if (id != comment.Id)
             {
+                _logger.LogError("id doesn't match model Id");
                 return NotFound();
             }
 
@@ -136,6 +157,7 @@ namespace Gallery.Web.Controllers
                 {
                     if (!CommentExists(comment.Id))
                     {
+                        _logger.LogError("Comment does not exist");
                         return NotFound();
                     }
                     else
@@ -143,16 +165,21 @@ namespace Gallery.Web.Controllers
                         throw;
                     }
                 }
+                _logger.LogInformation("Comment updated at {time},id - {commentId}", DateTime.Now, comment.Id);
                 return Redirect("~/Post/Details/" + comment.PostId);
             }
+            _logger.LogError("Model state is not valid, cannot update");
             return View(comment);
         }
 
 
         public async Task<IActionResult> Delete(Guid? id)
         {
+            _logger.LogInformation("Comment Delete action visited at {time}", DateTime.Now);
+
             if (id == null)
             {
+                _logger.LogError("id has null value");
                 return NotFound();
             }
 
@@ -160,9 +187,9 @@ namespace Gallery.Web.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (comment == null)
             {
+                _logger.LogError("Object was not found or has null value");
                 return NotFound();
             }
-
             return View(comment);
         }
 
@@ -174,6 +201,8 @@ namespace Gallery.Web.Controllers
             var comment = await _context.Comments.FindAsync(id);
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Comment deleted at {time}, id - {commentId}", DateTime.Now, comment.Id);
             return Redirect("~/Post/Details/" + comment.PostId);
         }
 

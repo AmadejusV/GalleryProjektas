@@ -22,11 +22,13 @@ namespace Gallery.Web.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Home Index action visited at {time}", DateTime.Now);
             return View();
         }
 
         public IActionResult Contact()
         {
+            _logger.LogInformation("Home Contact action visited at {time}", DateTime.Now);
             return View();
         }
 

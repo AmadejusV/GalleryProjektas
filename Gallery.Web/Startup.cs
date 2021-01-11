@@ -32,8 +32,9 @@ namespace Gallery.Web
         {
             services.AddControllersWithViews(o => o.Filters.Add(new AuthorizeFilter()));      //authorize by default on all controllers
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages().AddRazorRuntimeCompilation();      //adds runtime compilation to allow reload changes without restarting the app
 
+            //adding identity roles
             services.AddIdentity<AppUser, IdentityRole<Guid>>().AddEntityFrameworkStores<Context>().AddDefaultTokenProviders().AddUserStore<UserStore<AppUser, IdentityRole<Guid>, Context, Guid>>().AddRoleStore<RoleStore<IdentityRole<Guid>, Context, Guid>>();
             services.ConfigureApplicationCookie(options =>
             {
@@ -59,6 +60,7 @@ namespace Gallery.Web
 
             app.UseRouting();
 
+            //use authorization and authentication
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -74,7 +76,6 @@ namespace Gallery.Web
         {
 
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
-            //var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
 
             string[] roleNames = { "Admin", "Manager", "Member" };
             foreach (var item in roleNames)

@@ -10,6 +10,7 @@ namespace Gallery.Data
 {
     public class Context : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {
+        //adding tables to DB
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public Context(DbContextOptions<Context> options) : base(options)       //calling base constructor
@@ -21,12 +22,11 @@ namespace Gallery.Data
         {
             base.OnModelCreating(builder);
 
-
             //Admin Seed 
             Guid ADMIN_ID = Guid.NewGuid();
             Guid ADMIN_ROLE = Guid.NewGuid();
 
-            //seed admin role
+            //seeding admin role
 
             builder.Entity<IdentityRole<Guid>>().HasData(new IdentityRole<Guid>
             {
@@ -48,14 +48,14 @@ namespace Gallery.Data
                 NormalizedUserName = "IGNE@ADMIN.COM",
                 PasswordHash = "AQAAAAEAACcQAAAAEAlgwj8nK0YJlLN9vWhPrDweK0wc2Nh/299BrJGh6zlBkTfF5oNO8dBW6Xjd+vAgJA==",
                 ConcurrencyStamp = "2753310e-b58f-419e-bcb5-50d619ef4ed2",
-                Name = "Adminas",
+                Name = "Admin",
                 SecurityStamp = "2S3BIYUGVFUZY4FBPDZZ4354ZFCRBVUV"
             };
 
-            //seed user
+            //seeding user
             builder.Entity<AppUser>().HasData(appUser);
 
-            //set user role to admin
+            //setting user role
             builder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
             {
                 RoleId = ADMIN_ROLE,

@@ -26,7 +26,7 @@
     @foreach (var item in Model.Comments)
     {
     <div class="row">
-        <h5 class="col-2">@item.AppUser.UserName</h5> <span>@item.TimeCreated</span>
+        <h5 class="col-2">@item.AppUser.Name</h5> <span>@item.TimeCreated</span>
         <p class="col-12">@item.Text</p>
         @* Access to delete comments for admin and comment creator *@
         @if (item.AppUser==Model.CurrentAppUser || Model.CurrentAppUser.UserName=="igne@admin.com")

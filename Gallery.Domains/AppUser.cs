@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Gallery.Domains
 {
-    public class AppUser : IdentityUser<Guid> //uzdejau guid
+    public class AppUser : IdentityUser<Guid> //added Guid type
     {
         public string Name { get; set; }
         public List<Comment> Comments { get; set; }

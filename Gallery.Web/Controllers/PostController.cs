@@ -60,6 +60,7 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
+            //Includes Comments and it's AppUser
             //ThenInclude helps include an object property that belongs to Comments list object
             var post = await _context.Posts.Include(c => c.Comments).ThenInclude(c => c.AppUser)
                 .FirstOrDefaultAsync(m => m.PostId == id);
@@ -183,7 +184,7 @@ namespace Gallery.Web.Controllers
                 string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
                 string extension = Path.GetExtension(post.ImageFile.FileName);
                 fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                //newPostName used to set the new ImageName after deleting the old one
+                //newPostName used to set the new ImageName after deleting old image
                 var newPostName = fileName;
                 var newPath = Path.Combine(wwwRootPath + "/Image/", fileName);
 

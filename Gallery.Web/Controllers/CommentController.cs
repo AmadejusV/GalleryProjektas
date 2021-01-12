@@ -11,6 +11,7 @@ using Gallery.Web.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gallery.Web.Controllers
 {
@@ -35,7 +36,8 @@ namespace Gallery.Web.Controllers
             return View(await _context.Comments.ToListAsync());
         }
 
-
+        //Comment details admin only entry
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(Guid? id)
         {
             _logger.LogInformation("Comment Details action visited at {time}", DateTime.Now);
@@ -76,14 +78,15 @@ namespace Gallery.Web.Controllers
             return View(commentViewModel);
         }
 
-
+        //Creating comment
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CommentViewModel commentModel)
         {
             if (ModelState.IsValid)
             {
-                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);        //getting current user
+                //getting current user
+                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);     
                 AppUser applicationUser = await _userManager.FindByIdAsync(userId);
 
                 var post = await _context.Posts.FirstOrDefaultAsync(m => m.PostId == commentModel.PostId);
@@ -102,20 +105,23 @@ namespace Gallery.Web.Controllers
                     PostId = commentModel.PostId
                 };
 
-                _context.Comments.Add(newComment);  //adding comment to comments table
-                post.Comments.Add(newComment);      //adding comment to Post Comments list
+                //adding comment to comments table
+                _context.Comments.Add(newComment);
+                //adding comment to Post Comments list
+                post.Comments.Add(newComment);
 
                 _context.Update(post);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("New comment created at {time}, id - {commentId}", DateTime.Now, newComment.Id);
-                return Redirect("~/Post/Details/" + commentModel.PostId); //Redirecting to a specific path
+                //Redirecting to a specific path
+                return Redirect("~/Post/Details/" + commentModel.PostId); 
             }
             _logger.LogError("Model state is not valid");
             return View(commentModel);
         }
 
-        // GET: Comment/Edit/5
+        
         public async Task<IActionResult> Edit(Guid? id)
         {
             _logger.LogInformation("Comment Edit action visited at {time}", DateTime.Now);
@@ -136,6 +142,7 @@ namespace Gallery.Web.Controllers
         }
 
 
+        // Editting specific comment
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Comment comment)
@@ -194,6 +201,7 @@ namespace Gallery.Web.Controllers
         }
 
 
+        // Deleting specific comment
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

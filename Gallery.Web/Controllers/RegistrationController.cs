@@ -26,6 +26,7 @@ namespace Gallery.Web.Controllers
             _logger = logger;
         }
 
+        //Allows anonymous visits to the index view
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -52,6 +53,7 @@ namespace Gallery.Web.Controllers
                 return View("Login", model);
             }
 
+            //user sign in attempt
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
             if (result.Succeeded)
@@ -77,6 +79,7 @@ namespace Gallery.Web.Controllers
             {
                 AppUser newUser = new AppUser()
                 {
+                    Name = model.Name,
                     UserName = model.Email,
                     Email = model.Email,
                     Comments = new List<Comment>()

@@ -11,20 +11,8 @@ namespace Gallery.Web.Models
 {
     public class CommentViewModel
     {
-        //public Guid Id { get; set; }
-        //public DateTime TimeCreated { get; set; }
-        //public string Title { get; set; }
-        //public string ImageName { get; set; }
-        //public string Details { get; set; }
-        //[NotMapped]
-        //public IFormFile ImageFile { get; set; }
-        //public List<Comment> Comments { get; set; }  //beprasmis
         [Required]
-        public string Text { get; set; }    //beprasmis
-        //public AppUser AppUser { get; set; }
+        public string Text { get; set; }
         public int PostId { get; set; }
-        
-        //public Post Post { get; set; }
-
     }
 }

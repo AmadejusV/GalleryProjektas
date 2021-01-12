@@ -4,15 +4,16 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
+@* getting current user, using it's name to display *@
 @{
-    var name = UserManager.GetUserName(User);
+    var name = UserManager.GetUserAsync(User);
 }
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <p>Hello @name!</p>
+                <p>Hello @name.Result.Name!</p>
             </li>
             <li>
                 <a asp-controller="Registration" asp-action="Logout" class="btn btn-link navbar-btn  navbar-link">Logout</a>

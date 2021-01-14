@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAd4/fTS5Q+0SNxfv4pd+swQAAAAACAAAAAAAQZgAAAAEAACAAAAALDApQfBONdp5w+4pUZqtb5LajU1h+X/aEcVnwPgMN+AAAAAAOgAAAAAIAACAAAADT2DcKOiyWQpVYm93IvyTUpT4ipy5T396rn0Iv6bu+v4AAAABO2oWHaNrQPmGDefYrf0PP6LHwch2QeZTlfked+AL1ZCJ+9dq0uqDAGCdelPjstWgJWqyA0Szu48fszicaILmmKHsxKZqSPGjn2OHbtrK3hkwCHhWS/5I5T+U5ckVnJ0YbSbZQJhnMgnRztxNX7i4R1K5+0WvKkv3NEtlA43nL9UAAAADxZdlKq1LFK+aW0KL5OGHHVHY8RJLvzTdBA2jQ12coqWgHiX53QxfJl0MsR70Jsb1R49B/p44erW57tz69BFiW</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=tcp:gallery-project2021.database.windows.net,1433%3bInitial Catalog=Gallery%3bPersist Security Info=False%3bUser ID=Amadeus%3bPassword=A%402mis30%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="Gallery.Data.Context">
+      <Value>Server=tcp:gallery-project2021.database.windows.net,1433%3bInitial Catalog=Gallery%3bPersist Security Info=False%3bUser ID=Amadeus%3bPassword=A%402mis30%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

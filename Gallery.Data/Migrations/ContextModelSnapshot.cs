@@ -90,13 +90,13 @@ namespace Gallery.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b1bd17f5-7ff9-4033-b0bb-4b71ab29fe3f"),
+                            Id = new Guid("28789e6a-809c-4320-b1aa-d192f4ee799b"),
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "2753310e-b58f-419e-bcb5-50d619ef4ed2",
                             Email = "igne@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "Adminas",
+                            Name = "Admin",
                             NormalizedEmail = "IGNE@ADMIN.COM",
                             NormalizedUserName = "IGNE@ADMIN.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEAlgwj8nK0YJlLN9vWhPrDweK0wc2Nh/299BrJGh6zlBkTfF5oNO8dBW6Xjd+vAgJA==",
@@ -185,7 +185,7 @@ namespace Gallery.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d0f761b2-fe85-471e-914b-b26c46620403"),
+                            Id = new Guid("da9aeafd-2ca6-424c-ada4-9d71d458c998"),
                             ConcurrencyStamp = "27747190-7b7d-453d-ba7b-5bfa31119160",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -276,8 +276,8 @@ namespace Gallery.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("b1bd17f5-7ff9-4033-b0bb-4b71ab29fe3f"),
-                            RoleId = new Guid("d0f761b2-fe85-471e-914b-b26c46620403")
+                            UserId = new Guid("28789e6a-809c-4320-b1aa-d192f4ee799b"),
+                            RoleId = new Guid("da9aeafd-2ca6-424c-ada4-9d71d458c998")
                         });
                 });
 

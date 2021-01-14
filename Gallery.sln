@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Web", "Gallery.Web\Gallery.Web.csproj", "{B6019623-EBAA-4276-BAD7-DC6A9819C512}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gallery.Web", "Gallery.Web\Gallery.Web.csproj", "{B6019623-EBAA-4276-BAD7-DC6A9819C512}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{EB08E754-9FE2-4FF2-8BCA-01BE87711E1B}"
 EndProject
@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domains", "Domains", "{EF5F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9B22471E-5B05-4975-AE08-95AB6B275F79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Data", "Gallery.Data\Gallery.Data.csproj", "{3DB07890-069D-4F7C-8C78-DE62FCF87D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gallery.Data", "Gallery.Data\Gallery.Data.csproj", "{3DB07890-069D-4F7C-8C78-DE62FCF87D26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Domains", "Gallery.Domains\Gallery.Domains.csproj", "{5D47ABCE-A793-4CAD-8927-B1DC13D7F6CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gallery.Domains", "Gallery.Domains\Gallery.Domains.csproj", "{5D47ABCE-A793-4CAD-8927-B1DC13D7F6CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Services", "Gallery.Services\Gallery.Services.csproj", "{CE0883AB-AAD4-4CDB-9595-FFD60091391D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5D47ABCE-A793-4CAD-8927-B1DC13D7F6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D47ABCE-A793-4CAD-8927-B1DC13D7F6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D47ABCE-A793-4CAD-8927-B1DC13D7F6CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0883AB-AAD4-4CDB-9595-FFD60091391D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0883AB-AAD4-4CDB-9595-FFD60091391D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0883AB-AAD4-4CDB-9595-FFD60091391D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0883AB-AAD4-4CDB-9595-FFD60091391D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3DB07890-069D-4F7C-8C78-DE62FCF87D26} = {EB08E754-9FE2-4FF2-8BCA-01BE87711E1B}
 		{5D47ABCE-A793-4CAD-8927-B1DC13D7F6CC} = {EF5FC759-C404-4968-A51C-14815773304E}
+		{CE0883AB-AAD4-4CDB-9595-FFD60091391D} = {9B22471E-5B05-4975-AE08-95AB6B275F79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CE02E3F1-291C-4846-9F12-D79D6B8787A7}

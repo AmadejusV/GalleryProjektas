@@ -1,0 +1,9 @@
+C:\Users\amade\source\repos\Gallery\Gallery.Domains\bin\Release\netcoreapp3.1\Gallery.Domains.deps.json
+C:\Users\amade\source\repos\Gallery\Gallery.Domains\bin\Release\netcoreapp3.1\Gallery.Domains.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Domains\bin\Release\netcoreapp3.1\Gallery.Domains.pdb
+C:\Users\amade\source\repos\Gallery\Gallery.Domains\obj\Release\netcoreapp3.1\Gallery.Domains.csprojAssemblyReference.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Domains\obj\Release\netcoreapp3.1\Gallery.Domains.AssemblyInfoInputs.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Domains\obj\Release\netcoreapp3.1\Gallery.Domains.AssemblyInfo.cs
+C:\Users\amade\source\repos\Gallery\Gallery.Domains\obj\Release\netcoreapp3.1\Gallery.Domains.csproj.CoreCompileInputs.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Domains\obj\Release\netcoreapp3.1\Gallery.Domains.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Domains\obj\Release\netcoreapp3.1\Gallery.Domains.pdb

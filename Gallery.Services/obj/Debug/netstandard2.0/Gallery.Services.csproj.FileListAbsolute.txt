@@ -1,0 +1,9 @@
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netstandard2.0\Gallery.Services.deps.json
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netstandard2.0\Gallery.Services.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netstandard2.0\Gallery.Services.pdb
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netstandard2.0\Gallery.Services.csprojAssemblyReference.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netstandard2.0\Gallery.Services.AssemblyInfoInputs.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netstandard2.0\Gallery.Services.AssemblyInfo.cs
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netstandard2.0\Gallery.Services.csproj.CoreCompileInputs.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netstandard2.0\Gallery.Services.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netstandard2.0\Gallery.Services.pdb

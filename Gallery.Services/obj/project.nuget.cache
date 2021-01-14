@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "1alq9bwSBSZVaZ/T4rzUu33WlboGNVYGJ5qd8fzM53S49Niu0l6Q0NMHolbeHKxyb2xSpDV5P8XyNjC8ckQvEg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\amade\\source\\repos\\Gallery\\Gallery.Services\\Gallery.Services.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\amade\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\amade\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

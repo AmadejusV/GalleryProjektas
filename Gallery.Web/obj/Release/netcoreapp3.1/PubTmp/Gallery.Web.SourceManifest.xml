@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Release\netcoreapp3.1\PubTmp\Out\" />
+  <dbfullsql path="C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Release\netcoreapp3.1\PubTmp\EFSQLScripts\Gallery.Data.Context.sql" />
+</sitemanifest>

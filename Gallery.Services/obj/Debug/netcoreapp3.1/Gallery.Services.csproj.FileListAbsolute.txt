@@ -1,0 +1,14 @@
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netcoreapp3.1\Gallery.Services.deps.json
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netcoreapp3.1\Gallery.Services.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netcoreapp3.1\Gallery.Services.pdb
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netcoreapp3.1\Gallery.Data.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netcoreapp3.1\Gallery.Domains.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netcoreapp3.1\Gallery.Data.pdb
+C:\Users\amade\source\repos\Gallery\Gallery.Services\bin\Debug\netcoreapp3.1\Gallery.Domains.pdb
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netcoreapp3.1\Gallery.Services.csprojAssemblyReference.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netcoreapp3.1\Gallery.Services.AssemblyInfoInputs.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netcoreapp3.1\Gallery.Services.AssemblyInfo.cs
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netcoreapp3.1\Gallery.Services.csproj.CoreCompileInputs.cache
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netcoreapp3.1\Gallery.Services.csproj.CopyComplete
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netcoreapp3.1\Gallery.Services.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Services\obj\Debug\netcoreapp3.1\Gallery.Services.pdb

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Gallery.Data;
 using Gallery.Domains;
 using Gallery.Web.Models;
 using Microsoft.AspNetCore.Identity;

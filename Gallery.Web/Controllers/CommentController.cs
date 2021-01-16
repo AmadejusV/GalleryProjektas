@@ -1,31 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Gallery.Data;
 using Gallery.Domains;
 using Gallery.Web.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
+using Gallery.Services.Interfaces;
 
 namespace Gallery.Web.Controllers
 {
     public class CommentController : Controller
     {
-        private readonly Context _context;
+        private readonly ICommentService _commentService;
+        private readonly IPostService _postService;
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<CommentController> _logger;
 
-        public CommentController(Context context, UserManager<AppUser> userManager, ILogger<CommentController> logger)
+        public CommentController(ICommentService commentService, IPostService postService, UserManager<AppUser> userManager, ILogger<CommentController> logger)
         {
-            _context = context;
+            _commentService = commentService;
             _userManager = userManager;
             _logger = logger;
+            _postService = postService;
         }
 
 
@@ -33,7 +34,7 @@ namespace Gallery.Web.Controllers
         {
             _logger.LogInformation("Comment Index action visited at {time}", DateTime.Now);
 
-            return View(await _context.Comments.ToListAsync());
+            return View(await _commentService.GetAllCommentsAsync());
         }
 
         //Comment details admin only entry
@@ -48,8 +49,7 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var comment = await _commentService.GetCommentByIdAsync(id);
             if (comment == null)
             {
                 _logger.LogError("comment object was not found or has null value");
@@ -72,7 +72,7 @@ namespace Gallery.Web.Controllers
 
             var commentViewModel = new CommentViewModel()
             {
-                PostId=(int)id
+                PostId = (int)id
             };
 
             return View(commentViewModel);
@@ -83,37 +83,18 @@ namespace Gallery.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CommentViewModel commentModel)
         {
+            
+
             if (ModelState.IsValid)
             {
                 //getting current user
                 string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);     
                 AppUser applicationUser = await _userManager.FindByIdAsync(userId);
 
-                var post = await _context.Posts.FirstOrDefaultAsync(m => m.PostId == commentModel.PostId);
-
-                if (post == null)
-                {
-                    _logger.LogError("id has null value");
-                    return NotFound();
-                }
-
-                var newComment = new Comment()
-                {
-                    Id = Guid.NewGuid(),
-                    Text = commentModel.Text,
-                    AppUser = applicationUser,
-                    PostId = commentModel.PostId
-                };
-
                 //adding comment to comments table
-                _context.Comments.Add(newComment);
                 //adding comment to Post Comments list
-                post.Comments.Add(newComment);
+                await _commentService.CreateCommentAsync(commentModel.Text, applicationUser, commentModel.PostId);
 
-                _context.Update(post);
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("New comment created at {time}, id - {commentId}", DateTime.Now, newComment.Id);
                 //Redirecting to a specific path
                 return Redirect("~/Post/Details/" + commentModel.PostId); 
             }
@@ -132,7 +113,7 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _commentService.GetCommentByIdAsync(id);
             if (comment == null)
             {
                 _logger.LogError("comment object was not found or has null value");
@@ -157,12 +138,11 @@ namespace Gallery.Web.Controllers
             {
                 try
                 {
-                    _context.Update(comment);
-                    await _context.SaveChangesAsync();
+                    await _commentService.EditCommentByIdAsync(comment);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CommentExists(comment.Id))
+                    if (!_commentService.CommentExists(comment.Id))
                     {
                         _logger.LogError("Comment does not exist");
                         return NotFound();
@@ -190,8 +170,7 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var comment = await _commentService.GetCommentByIdAsync(id);
             if (comment == null)
             {
                 _logger.LogError("Object was not found or has null value");
@@ -206,17 +185,10 @@ namespace Gallery.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var comment = await _context.Comments.FindAsync(id);
-            _context.Comments.Remove(comment);
-            await _context.SaveChangesAsync();
+            var commentObject = await _commentService.GetCommentByIdAsync(id);
+            await _commentService.DeleteCommentByIdAsync(id);
 
-            _logger.LogInformation("Comment deleted at {time}, id - {commentId}", DateTime.Now, comment.Id);
-            return Redirect("~/Post/Details/" + comment.PostId);
-        }
-
-        private bool CommentExists(Guid id)
-        {
-            return _context.Comments.Any(e => e.Id == id);
+            return Redirect("~/Post/Details/" + commentObject.PostId);
         }
     }
 }

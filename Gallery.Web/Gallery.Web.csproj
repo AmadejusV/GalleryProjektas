@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Gallery.Data\Gallery.Data.csproj" />
     <ProjectReference Include="..\Gallery.Domains\Gallery.Domains.csproj" />
+    <ProjectReference Include="..\Gallery.Services\Gallery.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

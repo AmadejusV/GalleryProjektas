@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Gallery.Data;
 using Gallery.Domains;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
@@ -14,20 +12,21 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using Gallery.Services.Interfaces;
 
 namespace Gallery.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class PostController : Controller
     {
-        private readonly Context _context;
+        private readonly IPostService _postService;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<PostController> _logger;
 
-        public PostController(Context context, IWebHostEnvironment hostEnvironment, UserManager<AppUser> userManager, ILogger<PostController> logger)
+        public PostController(IPostService postService, IWebHostEnvironment hostEnvironment, UserManager<AppUser> userManager, ILogger<PostController> logger)
         {
-            _context = context;
+            _postService = postService;
             _hostEnvironment = hostEnvironment;
             _userManager = userManager;
             _logger = logger;
@@ -38,7 +37,7 @@ namespace Gallery.Web.Controllers
         {
             _logger.LogInformation("Post Index action visited at {time}", DateTime.Now);
 
-            return View(await _context.Posts.ToListAsync());
+            return View(await _postService.GetAllPostsAsync());
         }
 
         [AllowAnonymous]
@@ -46,7 +45,7 @@ namespace Gallery.Web.Controllers
         {
             _logger.LogInformation("Post GuestGallery action visited at {time}", DateTime.Now);
 
-            return View(await _context.Posts.ToListAsync());
+            return View(await _postService.GetAllPostsAsync());
         }
 
         [AllowAnonymous]
@@ -62,8 +61,7 @@ namespace Gallery.Web.Controllers
 
             //Includes Comments and it's AppUser
             //ThenInclude helps include an object property that belongs to Comments list object
-            var post = await _context.Posts.Include(c => c.Comments).ThenInclude(c => c.AppUser)
-                .FirstOrDefaultAsync(m => m.PostId == id);
+            var post = await _postService.GetPostByIdAsync(id);
 
             if (post == null)
             {
@@ -112,24 +110,15 @@ namespace Gallery.Web.Controllers
                 post.ImageName = fileName;                                             
                 string path = Path.Combine(wwwRootPath + "/Image/", fileName);
 
-                var newPostObject = new Post()
-                {
-                    ImageName = post.ImageName,
-                    Title = post.Title,
-                    Details = post.Details,
-                    ImageFile = post.ImageFile
-                };
-
                 //creating/uploading the new image in the set path
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     await post.ImageFile.CopyToAsync(fileStream);
                 }
 
-                _context.Add(newPostObject);
-                await _context.SaveChangesAsync();
+                await _postService.CreatePostAsync(post.ImageName, post.Title, post.Details, post.ImageFile);
 
-                _logger.LogInformation("New post created at {time}, postId - {postId}", DateTime.Now, newPostObject.PostId);
+                _logger.LogInformation("New post created at {time}, postId - {postId}", DateTime.Now, post.PostId);
                 return RedirectToAction(nameof(Index));
             }
             _logger.LogError("Model is not valid, could not create new post");
@@ -148,7 +137,7 @@ namespace Gallery.Web.Controllers
             }
 
             //Can't include ImageFile therefore during edit need to reselect the image
-            var post = await _context.Posts./*Include(p => p.ImageFile).*/FirstOrDefaultAsync(p => p.PostId == id);
+            var post = await _postService.GetPostByIdAsync(id);
 
             if (post == null)
             {
@@ -195,7 +184,7 @@ namespace Gallery.Web.Controllers
                         await post.ImageFile.CopyToAsync(fileStream);
                     }
 
-                    var oldPostObject = await _context.Posts.FindAsync(id);
+                    var oldPostObject = await _postService.GetPostByIdAsync(id);
                     var oldPath = Path.Combine(_hostEnvironment.WebRootPath, "Image", oldPostObject.ImageName);
 
                     //Deletes old image file
@@ -210,12 +199,11 @@ namespace Gallery.Web.Controllers
 
                     try
                     {
-                        _context.Posts.Update(oldPostObject);
-                        await _context.SaveChangesAsync();
+                        await _postService.EditPostByIdAsync(id, oldPostObject.ImageName, oldPostObject.Title, oldPostObject.Details, oldPostObject.ImageFile);
                     }
                     catch (DbUpdateConcurrencyException)
                     {
-                        if (!ImageExists(post.PostId))
+                        if (!_postService.ImageExists(post.PostId))
                         {
                             _logger.LogError("post does not exist with id - {postId}", post.PostId);
                             return NotFound();
@@ -245,25 +233,23 @@ namespace Gallery.Web.Controllers
                 return NotFound();
             }
 
-            var image = await _context.Posts
-                .FirstOrDefaultAsync(m => m.PostId == id);
+            var post = await _postService.GetPostByIdAsync(id);
 
-            if (image == null)
+            if (post == null)
             {
                 _logger.LogError("image could not be found or is null");
                 return NotFound();
             }
 
-            return View(image);
+            return View(post);
         }
-
 
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var post = await _context.Posts.FindAsync(id);
+            var post = await _postService.GetPostByIdAsync(id);
             var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", post.ImageName);
 
             if (System.IO.File.Exists(imagePath))
@@ -271,16 +257,10 @@ namespace Gallery.Web.Controllers
                 System.IO.File.Delete(imagePath);
             };
 
-            _context.Posts.Remove(post);
-            await _context.SaveChangesAsync();
+            await _postService.DeletePostByIdAsync(id);
 
             _logger.LogInformation("Post has been deleted successfully at {time}, id - {postId}", DateTime.Now, post.PostId);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ImageExists(int id)
-        {
-            return _context.Posts.Any(e => e.PostId == id);
         }
     }
 }

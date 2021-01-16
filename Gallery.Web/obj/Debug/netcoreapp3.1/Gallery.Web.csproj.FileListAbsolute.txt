@@ -463,3 +463,5 @@ C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Gallery.
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Gallery.Web.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\amade\source\repos\Gallery\Gallery.Web\obj\Debug\netcoreapp3.1\Gallery.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\amade\source\repos\Gallery\Gallery.Web\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\GalleryWeb - Web Deploy\profile.arm.json
+C:\Users\amade\source\repos\Gallery\Gallery.Web\bin\Debug\netcoreapp3.1\Gallery.Services.dll
+C:\Users\amade\source\repos\Gallery\Gallery.Web\bin\Debug\netcoreapp3.1\Gallery.Services.pdb

@@ -24,8 +24,8 @@
     ".NETCoreApp,Version=v3.1": {
       "Gallery.Web/1.0.0": {
         "dependencies": {
-          "Gallery.Data": "1.0.0",
           "Gallery.Domains": "1.0.0",
+          "Gallery.Services": "1.0.0",
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "3.1.10",
           "Microsoft.EntityFrameworkCore": "3.1.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.10",
@@ -2576,6 +2576,17 @@
         },
         "compile": {
           "Gallery.Domains.dll": {}
+        }
+      },
+      "Gallery.Services/1.0.0": {
+        "dependencies": {
+          "Gallery.Data": "1.0.0"
+        },
+        "runtime": {
+          "Gallery.Services.dll": {}
+        },
+        "compile": {
+          "Gallery.Services.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -5431,6 +5442,11 @@
       "sha512": ""
     },
     "Gallery.Domains/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Gallery.Services/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

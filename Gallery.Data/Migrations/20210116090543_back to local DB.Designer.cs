@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gallery.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210113095952_back to local db")]
-    partial class backtolocaldb
+    [Migration("20210116090543_back to local DB")]
+    partial class backtolocalDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,7 +92,7 @@ namespace Gallery.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("28789e6a-809c-4320-b1aa-d192f4ee799b"),
+                            Id = new Guid("deceee7f-4c18-499c-b436-d7be9b319e89"),
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "2753310e-b58f-419e-bcb5-50d619ef4ed2",
                             Email = "igne@admin.com",
@@ -187,7 +187,7 @@ namespace Gallery.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("da9aeafd-2ca6-424c-ada4-9d71d458c998"),
+                            Id = new Guid("90093a22-f3ee-4adb-b7f9-ce37acc18a7a"),
                             ConcurrencyStamp = "27747190-7b7d-453d-ba7b-5bfa31119160",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -278,8 +278,8 @@ namespace Gallery.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("28789e6a-809c-4320-b1aa-d192f4ee799b"),
-                            RoleId = new Guid("da9aeafd-2ca6-424c-ada4-9d71d458c998")
+                            UserId = new Guid("deceee7f-4c18-499c-b436-d7be9b319e89"),
+                            RoleId = new Guid("90093a22-f3ee-4adb-b7f9-ce37acc18a7a")
                         });
                 });
 

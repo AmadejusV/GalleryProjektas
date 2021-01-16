@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Gallery.Data;
 using Gallery.Domains;
+using Gallery.Services;
+using Gallery.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +35,8 @@ namespace Gallery.Web
             services.AddControllersWithViews(o => o.Filters.Add(new AuthorizeFilter()));      //authorize by default on all controllers
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddRazorPages().AddRazorRuntimeCompilation();      //adds runtime compilation to allow reload changes without restarting the app
+            services.AddTransient<IPostService, PostService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             //adding identity roles
             services.AddIdentity<AppUser, IdentityRole<Guid>>().AddEntityFrameworkStores<Context>().AddDefaultTokenProviders().AddUserStore<UserStore<AppUser, IdentityRole<Guid>, Context, Guid>>().AddRoleStore<RoleStore<IdentityRole<Guid>, Context, Guid>>();
